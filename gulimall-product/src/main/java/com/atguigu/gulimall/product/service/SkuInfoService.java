@@ -7,14 +7,20 @@ import com.atguigu.gulimall.product.entity.SkuInfoEntity;
 import java.util.Map;
 
 /**
- * sku
+ * sku信息
  *
- * @author zengzhuo
- * @email zengzhuo@gmail.com
- * @date 2020-10-08 20:38:36
+ * @author leifengyang
+ * @email leifengyang@gmail.com
+ * @date 2019-10-01 21:08:49
  */
 public interface SkuInfoService extends IService<SkuInfoEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    void saveSkuInfo(SkuInfoEntity skuInfoEntity);
+
+    PageUtils queryPageByCondition(Map<String, Object> params);
+
+
 }
 

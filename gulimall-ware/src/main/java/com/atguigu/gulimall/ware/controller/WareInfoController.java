@@ -18,11 +18,11 @@ import com.atguigu.common.utils.R;
 
 
 /**
- * 
+ * 仓库信息
  *
- * @author zengzhuo
- * @email zengzhuo@gmail.com
- * @date 2020-10-08 21:13:49
+ * @author leifengyang
+ * @email leifengyang@gmail.com
+ * @date 2019-10-08 09:59:40
  */
 @RestController
 @RequestMapping("ware/wareinfo")

@@ -18,11 +18,11 @@ import com.atguigu.common.utils.R;
 
 
 /**
- * sku
+ * sku销售属性&值
  *
- * @author zengzhuo
- * @email zengzhuo@gmail.com
- * @date 2020-10-08 20:38:36
+ * @author leifengyang
+ * @email leifengyang@gmail.com
+ * @date 2019-10-01 22:50:32
  */
 @RestController
 @RequestMapping("product/skusaleattrvalue")

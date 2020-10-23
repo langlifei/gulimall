@@ -9,11 +9,11 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * sku
+ * sku信息
  * 
- * @author zengzhuo
- * @email zengzhuo@gmail.com
- * @date 2020-10-08 20:38:36
+ * @author leifengyang
+ * @email leifengyang@gmail.com
+ * @date 2019-10-01 21:08:49
  */
 @Data
 @TableName("pms_sku_info")
@@ -30,39 +30,39 @@ public class SkuInfoEntity implements Serializable {
 	 */
 	private Long spuId;
 	/**
-	 * sku
+	 * sku名称
 	 */
 	private String skuName;
 	/**
-	 * sku
+	 * sku介绍描述
 	 */
 	private String skuDesc;
 	/**
-	 * 
+	 * 所属分类id
 	 */
 	private Long catalogId;
 	/**
-	 * Ʒ
+	 * 品牌id
 	 */
 	private Long brandId;
 	/**
-	 * Ĭ
+	 * 默认图片
 	 */
 	private String skuDefaultImg;
 	/**
-	 * 
+	 * 标题
 	 */
 	private String skuTitle;
 	/**
-	 * 
+	 * 副标题
 	 */
 	private String skuSubtitle;
 	/**
-	 * 
+	 * 价格
 	 */
 	private BigDecimal price;
 	/**
-	 * 
+	 * 销量
 	 */
 	private Long saleCount;
 

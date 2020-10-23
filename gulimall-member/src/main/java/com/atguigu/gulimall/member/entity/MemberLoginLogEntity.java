@@ -8,11 +8,11 @@ import java.util.Date;
 import lombok.Data;
 
 /**
+ * 会员登录记录
  * 
- * 
- * @author zengzhuo
- * @email zengzhuo@gmail.com
- * @date 2020-10-08 21:06:44
+ * @author leifengyang
+ * @email leifengyang@gmail.com
+ * @date 2019-10-08 09:47:05
  */
 @Data
 @TableName("ums_member_login_log")
@@ -29,7 +29,7 @@ public class MemberLoginLogEntity implements Serializable {
 	 */
 	private Long memberId;
 	/**
-	 * 
+	 * 创建时间
 	 */
 	private Date createTime;
 	/**
@@ -41,7 +41,7 @@ public class MemberLoginLogEntity implements Serializable {
 	 */
 	private String city;
 	/**
-	 * 
+	 * 登录类型[1-web，2-app]
 	 */
 	private Integer loginType;
 

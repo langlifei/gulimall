@@ -7,11 +7,11 @@ import com.atguigu.gulimall.member.entity.MemberLevelEntity;
 import java.util.Map;
 
 /**
- * 
+ * 会员等级
  *
- * @author zengzhuo
- * @email zengzhuo@gmail.com
- * @date 2020-10-08 21:06:44
+ * @author leifengyang
+ * @email leifengyang@gmail.com
+ * @date 2019-10-08 09:47:05
  */
 public interface MemberLevelService extends IService<MemberLevelEntity> {
 

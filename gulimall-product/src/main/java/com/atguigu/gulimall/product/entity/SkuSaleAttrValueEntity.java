@@ -8,11 +8,11 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * sku
+ * sku销售属性&值
  * 
- * @author zengzhuo
- * @email zengzhuo@gmail.com
- * @date 2020-10-08 20:38:36
+ * @author leifengyang
+ * @email leifengyang@gmail.com
+ * @date 2019-10-01 21:08:49
  */
 @Data
 @TableName("pms_sku_sale_attr_value")
@@ -33,15 +33,15 @@ public class SkuSaleAttrValueEntity implements Serializable {
 	 */
 	private Long attrId;
 	/**
-	 * 
+	 * 销售属性名
 	 */
 	private String attrName;
 	/**
-	 * 
+	 * 销售属性值
 	 */
 	private String attrValue;
 	/**
-	 * ˳
+	 * 顺序
 	 */
 	private Integer attrSort;
 

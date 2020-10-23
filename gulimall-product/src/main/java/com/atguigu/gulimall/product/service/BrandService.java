@@ -7,14 +7,17 @@ import com.atguigu.gulimall.product.entity.BrandEntity;
 import java.util.Map;
 
 /**
- * Ʒ
+ * 品牌
  *
- * @author zengzhuo
- * @email zengzhuo@gmail.com
- * @date 2020-10-08 20:38:36
+ * @author leifengyang
+ * @email leifengyang@gmail.com
+ * @date 2019-10-01 21:08:49
  */
 public interface BrandService extends IService<BrandEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    void updateDetail(BrandEntity brand);
+
 }
 

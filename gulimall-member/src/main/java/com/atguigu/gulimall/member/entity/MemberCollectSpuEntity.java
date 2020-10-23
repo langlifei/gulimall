@@ -8,11 +8,11 @@ import java.util.Date;
 import lombok.Data;
 
 /**
+ * 会员收藏的商品
  * 
- * 
- * @author zengzhuo
- * @email zengzhuo@gmail.com
- * @date 2020-10-08 21:06:44
+ * @author leifengyang
+ * @email leifengyang@gmail.com
+ * @date 2019-10-08 09:47:05
  */
 @Data
 @TableName("ums_member_collect_spu")
@@ -25,7 +25,7 @@ public class MemberCollectSpuEntity implements Serializable {
 	@TableId
 	private Long id;
 	/**
-	 * 
+	 * 会员id
 	 */
 	private Long memberId;
 	/**

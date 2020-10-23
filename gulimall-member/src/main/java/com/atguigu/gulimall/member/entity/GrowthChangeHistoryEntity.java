@@ -8,11 +8,11 @@ import java.util.Date;
 import lombok.Data;
 
 /**
+ * 成长值变化历史记录
  * 
- * 
- * @author zengzhuo
- * @email zengzhuo@gmail.com
- * @date 2020-10-08 21:06:44
+ * @author leifengyang
+ * @email leifengyang@gmail.com
+ * @date 2019-10-08 09:47:05
  */
 @Data
 @TableName("ums_growth_change_history")
@@ -33,15 +33,15 @@ public class GrowthChangeHistoryEntity implements Serializable {
 	 */
 	private Date createTime;
 	/**
-	 * 
+	 * 改变的值（正负计数）
 	 */
 	private Integer changeCount;
 	/**
-	 * 
+	 * 备注
 	 */
 	private String note;
 	/**
-	 * 
+	 * 积分来源[0-购物，1-管理员修改]
 	 */
 	private Integer sourceType;
 

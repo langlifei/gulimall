@@ -7,11 +7,11 @@ import com.atguigu.gulimall.member.entity.MemberLoginLogEntity;
 import java.util.Map;
 
 /**
- * 
+ * 会员登录记录
  *
- * @author zengzhuo
- * @email zengzhuo@gmail.com
- * @date 2020-10-08 21:06:44
+ * @author leifengyang
+ * @email leifengyang@gmail.com
+ * @date 2019-10-08 09:47:05
  */
 public interface MemberLoginLogService extends IService<MemberLoginLogEntity> {
 
