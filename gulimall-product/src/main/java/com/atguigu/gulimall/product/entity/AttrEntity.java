@@ -36,7 +36,7 @@ public class AttrEntity implements Serializable {
 	/**
 	 * 值类型[0-为单个值，1-可以选择多个值]
 	 */
-	private Integer valueType;
+	 private Integer valueType;
 	/**
 	 * 属性图标
 	 */
@@ -61,6 +61,9 @@ public class AttrEntity implements Serializable {
 	 * 快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整
 	 */
 	private Integer showDesc;
+
+//	private Integer groupId;
+
 
 //	@TableField(exist = false)
 //	private Long attrGroupId;

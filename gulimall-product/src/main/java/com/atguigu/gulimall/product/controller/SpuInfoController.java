@@ -44,6 +44,18 @@ public class SpuInfoController {
 
 
     /**
+     * 商品上架
+     * @param id
+     * @return
+     */
+    @RequestMapping("/{spuId}/up")
+    //@RequiresPermissions("product:spuinfo:info")
+    public R spuUp(@PathVariable("spuId") Long id){
+        spuInfoService.up(id);
+        return R.ok();
+    }
+
+    /**
      * 信息
      */
     @RequestMapping("/info/{id}")
@@ -61,9 +73,7 @@ public class SpuInfoController {
     //@RequiresPermissions("product:spuinfo:save")
     public R save(@RequestBody SpuSaveVo vo){
 		//spuInfoService.save(spuInfo);
-
         spuInfoService.saveSpuInfo(vo);
-
         return R.ok();
     }
 

@@ -8,6 +8,9 @@
 
 package com.atguigu.common.utils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import com.atguigu.common.exception.BizCodeEnume;
 import org.apache.http.HttpStatus;
 
 import java.util.HashMap;
@@ -25,7 +28,33 @@ public class R extends HashMap<String, Object> {
 		put("code", 0);
 		put("msg", "success");
 	}
-	
+
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
+
+
+	public R setData(Object data) {
+		put("data",data);
+		return this;
+	}
+
+	//利用fastjson进行反序列化
+	public <T> T getData(TypeReference<T> typeReference) {
+		Object data = get("data");	//默认是map
+		String jsonString = JSON.toJSONString(data);
+		T t = JSON.parseObject(jsonString, typeReference);
+		return t;
+	}
+
+	//利用fastjson进行反序列化
+	public <T> T getData(String key,TypeReference<T> typeReference) {
+		Object data = get(key);	//默认是map
+		String jsonString = JSON.toJSONString(data);
+		T t = JSON.parseObject(jsonString, typeReference);
+		return t;
+	}
+
 	public static R error() {
 		return error(HttpStatus.SC_INTERNAL_SERVER_ERROR, "未知异常，请联系管理员");
 	}
@@ -33,13 +62,28 @@ public class R extends HashMap<String, Object> {
 	public static R error(String msg) {
 		return error(HttpStatus.SC_INTERNAL_SERVER_ERROR, msg);
 	}
-	
+
 	public static R error(int code, String msg) {
 		R r = new R();
 		r.put("code", code);
 		r.put("msg", msg);
 		return r;
 	}
+
+	public static R error(BizCodeEnume bizCodeEnume) {
+		R r = new R();
+		r.put("code", bizCodeEnume.getCode());
+		r.put("msg", bizCodeEnume.getMsg());
+		return r;
+	}
+
+	public static R ok(BizCodeEnume bizCodeEnume) {
+		R r = new R();
+		r.put("code", bizCodeEnume.getCode());
+		r.put("msg", bizCodeEnume.getMsg());
+		return r;
+	}
+
 
 	public static R ok(String msg) {
 		R r = new R();

@@ -18,11 +18,11 @@ import com.atguigu.common.utils.R;
 
 
 /**
- * ר
+ * 专题商品
  *
- * @author zengzhuo
- * @email zengzhuo@gmail.com
- * @date 2020-10-08 21:00:54
+ * @author leifengyang
+ * @email leifengyang@gmail.com
+ * @date 2019-10-08 09:36:40
  */
 @RestController
 @RequestMapping("coupon/homesubjectspu")

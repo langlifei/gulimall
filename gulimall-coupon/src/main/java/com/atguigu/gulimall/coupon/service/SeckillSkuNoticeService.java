@@ -7,11 +7,11 @@ import com.atguigu.gulimall.coupon.entity.SeckillSkuNoticeEntity;
 import java.util.Map;
 
 /**
- * 
+ * 秒杀商品通知订阅
  *
- * @author zengzhuo
- * @email zengzhuo@gmail.com
- * @date 2020-10-08 21:00:54
+ * @author leifengyang
+ * @email leifengyang@gmail.com
+ * @date 2019-10-08 09:36:39
  */
 public interface SeckillSkuNoticeService extends IService<SeckillSkuNoticeEntity> {
 
