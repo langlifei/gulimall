@@ -1,6 +1,7 @@
 package com.atguigu.gulimall.product.service.impl;
 
 import com.atguigu.gulimall.product.service.CategoryBrandRelationService;
+import com.atguigu.gulimall.product.vo.Catalog2Vo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +26,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("categoryService")
 public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity> implements CategoryService {
 
-//    @Autowired
-//    CategoryDao categoryDao;
+    @Autowired
+    CategoryDao categoryDao;
+
+    @Autowired
+    CategoryService categoryService;
 
     @Autowired
     CategoryBrandRelationService categoryBrandRelationService;
@@ -93,6 +97,42 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     public void updateCascade(CategoryEntity category) {
         this.updateById(category);
         categoryBrandRelationService.updateCategory(category.getCatId(),category.getName());
+    }
+
+    @Override
+    public List<CategoryEntity> getLevel1Categories() {
+        List<CategoryEntity> parent_cid = categoryDao.selectList(new QueryWrapper<CategoryEntity>().eq("parent_cid", 0));
+        return parent_cid;
+    }
+
+    @Override
+    public Map<String, List<Catalog2Vo>> getCatalogJson() {
+        List<CategoryEntity> level1Categories = categoryService.getLevel1Categories();
+        Map<String,List<Catalog2Vo>> map = null;
+        if(level1Categories != null){
+            map = level1Categories.stream().collect(Collectors.toMap(k->k.getCatId().toString(),v->{
+                List<CategoryEntity> catalogEntities = categoryDao.selectList(new QueryWrapper<CategoryEntity>().eq("parent_cid",v.getCatId()));
+                List<Catalog2Vo> catalog2Vos = null;
+                if(catalogEntities!=null){
+                    catalog2Vos = catalogEntities.stream().map(l2->{
+                        Catalog2Vo catalog2Vo = new Catalog2Vo(v.getCatId().toString(),null,l2.getCatId().toString(),l2.getName());
+                        List<CategoryEntity> level3Catalog = categoryDao.selectList(new QueryWrapper<CategoryEntity>().eq("parent_cid",l2.getCatId()));
+                        List<Catalog2Vo.Catalog3Vo> collect = null;
+                        if(level3Catalog!=null){
+                            collect = level3Catalog.stream().map(l3->{
+                                Catalog2Vo.Catalog3Vo catalog3Vo = new Catalog2Vo.Catalog3Vo(l2.getCatId().toString(),l3.getCatId().toString(),l3.getName());
+                                return catalog3Vo;
+                            }).collect(Collectors.toList());
+                        }
+                        catalog2Vo.setCatalog3List(collect);
+                        return catalog2Vo;
+                    }).collect(Collectors.toList());
+                    return catalog2Vos;
+                }
+                return null;
+            }));
+        }
+        return map;
     }
 
     //225,25,2
