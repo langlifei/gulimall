@@ -1,4 +1,4 @@
-package com.atguigu.gulimall.lsearch.vo;
+package com.atguigu.gulimall.search.vo;
 
 import com.atguigu.common.to.es.SkuEsModel;
 import lombok.Data;

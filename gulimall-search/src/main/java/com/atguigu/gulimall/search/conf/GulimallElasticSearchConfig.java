@@ -1,4 +1,4 @@
-package com.atguigu.gulimall.lsearch.conf;
+package com.atguigu.gulimall.search.conf;
 
 
 import org.apache.http.HttpHost;

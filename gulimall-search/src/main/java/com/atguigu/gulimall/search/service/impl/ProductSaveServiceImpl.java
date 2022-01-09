@@ -1,10 +1,10 @@
-package com.atguigu.gulimall.lsearch.service.impl;
+package com.atguigu.gulimall.search.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.atguigu.common.to.es.SkuEsModel;
-import com.atguigu.gulimall.lsearch.conf.GulimallElasticSearchConfig;
-import com.atguigu.gulimall.lsearch.constant.EsConstant;
-import com.atguigu.gulimall.lsearch.service.ProductSaveService;
+import com.atguigu.gulimall.search.conf.GulimallElasticSearchConfig;
+import com.atguigu.gulimall.search.constant.EsConstant;
+import com.atguigu.gulimall.search.service.ProductSaveService;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;

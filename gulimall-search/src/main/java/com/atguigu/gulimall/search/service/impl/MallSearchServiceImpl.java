@@ -1,12 +1,16 @@
-package com.atguigu.gulimall.lsearch.service.impl;
+package com.atguigu.gulimall.search.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.atguigu.common.to.es.SkuEsModel;
-import com.atguigu.gulimall.lsearch.conf.GulimallElasticSearchConfig;
-import com.atguigu.gulimall.lsearch.constant.EsConstant;
-import com.atguigu.gulimall.lsearch.service.MallSearchService;
-import com.atguigu.gulimall.lsearch.vo.SearchParam;
-import com.atguigu.gulimall.lsearch.vo.SearchResult;
+import com.atguigu.common.utils.R;
+import com.atguigu.gulimall.search.conf.GulimallElasticSearchConfig;
+import com.atguigu.gulimall.search.constant.EsConstant;
+import com.atguigu.gulimall.search.feign.ProductFeignService;
+import com.atguigu.gulimall.search.service.MallSearchService;
+import com.atguigu.gulimall.search.vo.AttrResponseVo;
+import com.atguigu.gulimall.search.vo.SearchParam;
+import com.atguigu.gulimall.search.vo.SearchResult;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.search.join.ScoreMode;
 import org.elasticsearch.action.search.SearchRequest;
@@ -15,7 +19,6 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.nested.NestedAggregationBuilder;
@@ -31,8 +34,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import javax.swing.*;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,6 +47,9 @@ public class MallSearchServiceImpl implements MallSearchService {
     @Qualifier("esClient")
     @Autowired
     private RestHighLevelClient client;
+
+    @Autowired
+    private ProductFeignService productFeignService;
 
     @Override
     public SearchResult search(SearchParam searchParam) {
@@ -142,6 +149,37 @@ public class MallSearchServiceImpl implements MallSearchService {
             catalogVos.add(catalogVo);
         }
         searchResult.setCatalogs(catalogVos);
+        //6、构建面包屑导航
+        if (searchParam.getAttrs() != null && searchParam.getAttrs().size() > 0) {
+            List<SearchResult.NavVo> collect = searchParam.getAttrs().stream().map(attr -> {
+                //1、分析每一个attrs传过来的参数值
+                SearchResult.NavVo navVo = new SearchResult.NavVo();
+                String[] s = attr.split("_");
+                navVo.setNavValue(s[1]);
+                R r = productFeignService.attrInfo(Long.parseLong(s[0]));
+                if (r.getCode() == 0) {
+                    AttrResponseVo data = r.getData("attr", new TypeReference<AttrResponseVo>() {
+                    });
+                    navVo.setNavName(data.getAttrName());
+                } else {
+                    navVo.setNavName(s[0]);
+                }
+
+                //2、取消了这个面包屑以后，我们要跳转到哪个地方，将请求的地址url里面的当前置空
+                //拿到所有的查询条件，去掉当前
+                String encode = null;
+                try {
+                    encode = URLEncoder.encode(attr,"UTF-8");
+                    encode.replace("+","%20");  //浏览器对空格的编码和Java不一样，差异化处理
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                String replace = searchParam.get_queryString().replace("&attrs=" + encode, "");
+                navVo.setLink("http://search.gulimall.com/list.html?" + replace);
+                return navVo;
+            }).collect(Collectors.toList());
+            searchResult.setNavs(collect);
+        }
         return searchResult;
     }
 
@@ -182,7 +220,9 @@ public class MallSearchServiceImpl implements MallSearchService {
             }
         }
         //1.2.4 库存过滤
-        boolQuery.filter(QueryBuilders.termQuery("hasStock",searchParam.getHasStock() == 1));
+        if(searchParam.getHasStock() != null){
+            boolQuery.filter(QueryBuilders.termQuery("hasStock",searchParam.getHasStock() == 1));
+        }
         //1.2.5 价格区间过滤  skuPrice=1_500/_500/500_  表示1-500,0-500,500以上
         if(!StringUtils.isEmpty(searchParam.getSkuPrice())){
             String[] split = searchParam.getSkuPrice().split("_");
