@@ -7,8 +7,8 @@ spring:
       access-key:
       secret-key: 
       oss:
-        endpoint: oss-cn-chengdu.aliyuncs.com
-        bucket: langlifei
+        endpoint:
+        bucket:
   application:
     name: gulimall-third-party
 server:
