@@ -36,3 +36,4 @@ logging:
   level:
     com.atguigu.gulimall: error
 
+
