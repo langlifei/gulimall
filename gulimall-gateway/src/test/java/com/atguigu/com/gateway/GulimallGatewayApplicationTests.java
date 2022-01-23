@@ -10,4 +10,5 @@ class GulimallGatewayApplicationTests {
 	void contextLoads() {
 	}
 
+
 }
