@@ -8,6 +8,7 @@ package com.atguigu.common.exception;
  * 错误码列表：
  *  10: 通用
  *      001：参数格式校验
+ *      002: 短信验证码
  *  11: 商品
  *  12: 订单
  *  13: 购物车

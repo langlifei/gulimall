@@ -1,4 +1,4 @@
-package com.atguigu.gulimall.auth.Controller;
+package com.atguigu.gulimall.auth.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
