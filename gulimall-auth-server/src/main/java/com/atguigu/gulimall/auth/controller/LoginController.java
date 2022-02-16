@@ -1,28 +1,29 @@
 package com.atguigu.gulimall.auth.controller;
 
+import com.alibaba.fastjson.TypeReference;
 import com.atguigu.common.constant.AuthServerConstant;
 import com.atguigu.common.exception.BizCodeEnume;
 import com.atguigu.common.utils.R;
+import com.atguigu.gulimall.auth.feign.MemberFeignService;
 import com.atguigu.gulimall.auth.feign.ThirdPartFeignService;
 import com.atguigu.gulimall.auth.vo.UserRegisterVo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-@RestController
+@Controller
 public class LoginController {
 
     @Autowired
@@ -31,6 +32,10 @@ public class LoginController {
     @Autowired
     ThirdPartFeignService thirdPartFeignService;
 
+    @Autowired
+    MemberFeignService memberFeignService;
+
+    @ResponseBody
     @GetMapping("/sms/sendCode")
     public R sendCode(@RequestParam("phone")String phone){
 
@@ -46,8 +51,9 @@ public class LoginController {
             }
         }
         //给当前验证码加上系统时间,防止有人恶意消耗验证码
-        String code = UUID.randomUUID().toString().substring(0, 5)+"_"+System.currentTimeMillis();
-        redisTemplate.opsForValue().set(AuthServerConstant.SMS_CODE_CACHE_PREFIX+phone,code,10, TimeUnit.MINUTES);
+        String code = UUID.randomUUID().toString().substring(0, 5);
+        redisCode = code +"_"+System.currentTimeMillis();
+        redisTemplate.opsForValue().set(AuthServerConstant.SMS_CODE_CACHE_PREFIX+phone,redisCode,10, TimeUnit.MINUTES);
         thirdPartFeignService.sendCode(phone,code);
         return R.ok();
     }
@@ -67,25 +73,23 @@ public class LoginController {
 
         //如果有错误回到注册页面
         if (result.hasErrors()) {
-            Map<String, String> errors = result.getFieldErrors().stream().collect(
-                    Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
+            Map<String, String> errors = result.getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
             attributes.addFlashAttribute("errors",errors);
 
             //效验出错回到注册页面
             return "redirect:http://auth.gulimall.com/reg.html";
         }
-        return "";
 
-       /* //1、效验验证码
+        //1、效验验证码
         String code = vos.getCode();
 
         //获取存入Redis里的验证码
-        String redisCode = stringRedisTemplate.opsForValue().get(AuthServerConstant.SMS_CODE_CACHE_PREFIX + vos.getPhone());
+        String redisCode = (String) redisTemplate.opsForValue().get(AuthServerConstant.SMS_CODE_CACHE_PREFIX + vos.getPhone());
         if (!StringUtils.isEmpty(redisCode)) {
             //截取字符串
             if (code.equals(redisCode.split("_")[0])) {
                 //删除验证码;令牌机制
-                stringRedisTemplate.delete(AuthServerConstant.SMS_CODE_CACHE_PREFIX+vos.getPhone());
+                redisTemplate.delete(AuthServerConstant.SMS_CODE_CACHE_PREFIX+vos.getPhone());
                 //验证码通过，真正注册，调用远程服务进行注册
                 R register = memberFeignService.register(vos);
                 if (register.getCode() == 0) {
@@ -113,8 +117,9 @@ public class LoginController {
             errors.put("code","验证码错误");
             attributes.addFlashAttribute("errors",errors);
             return "redirect:http://auth.gulimall.com/reg.html";
-        }*/
+        }
     }
+
 
 
 }
