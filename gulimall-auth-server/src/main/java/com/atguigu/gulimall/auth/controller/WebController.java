@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class WebController {
 
-    @GetMapping("/login.html")
-    public String login(){
-        return "login";
-    }
+//    @GetMapping("/login.html")
+//    public String login(){
+//        return "login";
+//    }
 
     @GetMapping("/reg.html")
     public String reg(){

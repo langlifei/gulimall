@@ -1,5 +1,6 @@
 package com.atguigu.gulimall.product;
 
+import com.atguigu.common.constant.AuthServerConstant;
 import com.atguigu.gulimall.product.entity.BrandEntity;
 import com.atguigu.gulimall.product.entity.CategoryEntity;
 import com.atguigu.gulimall.product.service.BrandService;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.servlet.http.HttpSession;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -42,6 +44,9 @@ public class GulimallProductApplicationTests {
     @Autowired
     RedissonClient redisson;
 
+    @Autowired
+    HttpSession session;
+
     @Test
     public void testFindPath(){
         Long[] catelogPath = categoryService.findCatelogPath(225L);
@@ -51,6 +56,12 @@ public class GulimallProductApplicationTests {
     @Test
     public void testRedisson(){
         System.out.println(redisson);
+    }
+
+    @Test
+    public void redisSession(){
+        Object attribute = session.getAttribute(AuthServerConstant.LOGIN_USER);
+        System.out.println(attribute);
     }
 
 

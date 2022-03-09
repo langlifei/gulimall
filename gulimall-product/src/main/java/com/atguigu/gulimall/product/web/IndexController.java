@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -32,4 +33,14 @@ public class IndexController {
         Map<String,List<Catalog2Vo>> map = categoryService.getCatalogJson();
         return map;
     }
+
+    @ResponseBody
+    @GetMapping("/index/catalog1.json")
+    public Map<String,List<Catalog2Vo>> getCatalogJson1(HttpSession session){
+        session.setAttribute("zzz","111");
+        Map<String,List<Catalog2Vo>> map = categoryService.getCatalogJson();
+        return map;
+    }
+
+
 }

@@ -22,6 +22,8 @@ spring:
       cache-null-values: true
       use-key-prefix: true
 #      key-prefix: CACHE_
+  session:
+    store-type: redis
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml

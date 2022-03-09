@@ -52,30 +52,32 @@
 						<span><a href="/static/login/#">更安全</a></span>
 					</p>
 				</div>
-				<div class="si_bom1 tab" style="display: none;">
-					<div class="error">
-						<div></div>
-						请输入账户名和密码
+					<div class="si_bom1 tab" style="display: none;">
+						<div class="error">
+							<div></div>
+							请输入账户名和密码
+						</div>
+						<form action="/login" method="post">
+							<ul>
+								<li class="top_1">
+									<img src="/static/login/JD_img/user_03.png" class="err_img1" />
+									<input name="loginacct" type="text" placeholder=" 邮箱/用户名/已验证手机" class="user" />
+								</li>
+								<li>
+									<img src="/static/login/JD_img/user_06.png" class="err_img2" />
+									<input name="password" type="password" placeholder=" 密码" class="password" />
+								</li>
+								<li class="bri">
+									<a href="/static/login/">忘记密码</a>
+								</li>
+								<li class="ent"><button class="btn2" type="submit"><a class="a">登 &nbsp; &nbsp;录</a></button></li>
+							</ul>
+						</form>
 					</div>
-					<ul>
-						<li class="top_1">
-							<img src="/static/login/JD_img/user_03.png" class="err_img1" />
-							<input type="text" placeholder=" 邮箱/用户名/已验证手机" class="user" />
-						</li>
-						<li>
-							<img src="/static/login/JD_img/user_06.png" class="err_img2" />
-							<input type="password" placeholder=" 密码" class="password" />
-						</li>
-						<li class="bri">
-							<a href="/static/login/">忘记密码</a>
-						</li>
-						<li class="ent"><button class="btn2"><a class="a">登 &nbsp; &nbsp;录</a></button></li>
-					</ul>
-				</div>
 				<div class="si_out">
 					<ul>
 						<li>
-							<a href="https://api.weibo.com/oauth2/authorize?client_id=2077705774&response_type=code&redirect_uri=http://auth.gulimall.com/oauth2.0/weibo/success">
+							<a href="https://api.weibo.com/oauth2/authorize?client_id=3807219007&response_type=code&redirect_uri=http%3A%2F%2Fauth.gulimall.com%2F%2Foauth2.0%2Fweibo%2Fsuccess">
 								<img style="width: 50px;height: 18px;" src="/static/login/JD_img/weibo.png"/>
 								<!--                        <span>weibo</span>-->
 							</a>
@@ -88,7 +90,6 @@
 							</a>
 						</li>
 					</ul>
-					</form>
 
 					<h5 class="rig">
 						<img src="/static/login/JD_img/4de5019d2404d347897dee637895d02b_25.png"/>
@@ -159,7 +160,7 @@
 				err_img1.src = 'JD_img/img11.png';
 				err_img2.src = 'JD_img/img22.png';
 			} else {
-				var a = document.getElementsByClassName("a")[0].href = "http://www.baidu.com";
+				// var a = document.getElementsByClassName("a")[0].href = "http://www.baidu.com";
 			}
 			user.onfocus = function() {
 				err_img1.src = 'JD_img/grow1.png';
