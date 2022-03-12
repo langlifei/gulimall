@@ -1,6 +1,7 @@
 package com.atguigu.gulimall.product.web;
 
 
+import com.atguigu.common.constant.AuthServerConstant;
 import com.atguigu.gulimall.product.entity.CategoryEntity;
 import com.atguigu.gulimall.product.service.CategoryService;
 import com.atguigu.gulimall.product.vo.Catalog2Vo;

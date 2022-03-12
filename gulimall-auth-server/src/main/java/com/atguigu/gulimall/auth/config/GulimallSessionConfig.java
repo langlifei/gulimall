@@ -1,8 +1,8 @@
-package config;
+package com.atguigu.gulimall.auth.config;
 
+import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.session.web.http.CookieSerializer;
 import org.springframework.session.web.http.DefaultCookieSerializer;
@@ -19,9 +19,10 @@ public class GulimallSessionConfig {
 
         DefaultCookieSerializer cookieSerializer = new DefaultCookieSerializer();
 
-        //放大作用域
-        cookieSerializer.setDomainName("gulimall.com");
         cookieSerializer.setCookieName("GULISESSION");
+        cookieSerializer.setCookiePath("/");
+        // 设置cookie的作用域为父域名
+        cookieSerializer.setDomainName("gulimall.com");
 
         return cookieSerializer;
     }
@@ -29,7 +30,7 @@ public class GulimallSessionConfig {
 
     @Bean
     public RedisSerializer<Object> springSessionDefaultRedisSerializer() {
-        return new GenericJackson2JsonRedisSerializer();
+        return new GenericFastJsonRedisSerializer();
     }
 
 }
