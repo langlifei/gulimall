@@ -60,8 +60,8 @@ public class GulimallProductApplicationTests {
 
     @Test
     public void redisSession(){
-        Object attribute = session.getAttribute(AuthServerConstant.LOGIN_USER);
-        System.out.println(attribute);
+        session.setAttribute("zz","123456");
+        System.out.println(session.getAttribute("zz"));
     }
 
 
